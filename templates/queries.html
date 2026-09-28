@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}RentalDB | SQL Queries{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <p class="eyebrow">Analytical SQL</p>
+    <h1>Query Dashboard</h1>
+    <p>Three database questions answered with joins, reusable views, correlated subqueries, and aggregation.</p>
+</div>
+
+<section class="result-card">
+    <div class="result-heading">
+        <span>Query 01</span>
+        <h2>Highest-paying renters by qualifying apartment</h2>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>Apartment ID</th><th>Renter ID</th></tr></thead>
+            <tbody>
+                {% for row in highest_cost_renters %}
+                <tr><td>{{ row.aID }}</td><td>{{ row.renterID }}</td></tr>
+                {% empty %}
+                <tr><td colspan="2" class="empty">No matching records.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="result-card">
+    <div class="result-heading">
+        <span>Query 02</span>
+        <h2>Cities matching renter and owner criteria</h2>
+    </div>
+    <div class="table-wrap compact-table">
+        <table>
+            <thead><tr><th>City</th></tr></thead>
+            <tbody>
+                {% for row in minimalist_cities %}
+                <tr><td>{{ row.city }}</td></tr>
+                {% empty %}
+                <tr><td class="empty">No matching records.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="result-card">
+    <div class="result-heading">
+        <span>Query 03</span>
+        <h2>Owner rental-pattern summary</h2>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>Owner</th><th>Birth date</th><th>Matching apartments</th></tr></thead>
+            <tbody>
+                {% for row in owner_patterns %}
+                <tr>
+                    <td>{{ row.oName }}</td>
+                    <td>{{ row.bDate }}</td>
+                    <td>{{ row.problematic_rented_apartments }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="empty">No matching records.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}
+

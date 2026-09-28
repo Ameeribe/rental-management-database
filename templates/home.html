@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}RentalDB | Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">Django + Microsoft SQL Server</p>
+        <h1>Rental Management Database</h1>
+        <p class="lead">
+            Explore a relational rental dataset, run reusable analytical queries,
+            record annual agreements, and inspect owner-level statistics.
+        </p>
+        <div class="actions">
+            <a class="button primary" href="{% url 'queries' %}">Explore SQL queries</a>
+            <a class="button secondary" href="{% url 'analytics' %}">Open analytics</a>
+        </div>
+    </div>
+    <img src="{% static 'house.png' %}" alt="Illustration of a house">
+</section>
+
+<section class="feature-grid" aria-label="Project features">
+    <article class="card">
+        <span class="metric">3</span>
+        <h2>Related entities</h2>
+        <p>Owners, apartments, and annual rental agreements connected through primary and foreign keys.</p>
+    </article>
+    <article class="card">
+        <span class="metric">8</span>
+        <h2>Reusable SQL views</h2>
+        <p>Views organize complex filtering, co-rental patterns, eligibility rules, and aggregation.</p>
+    </article>
+    <article class="card">
+        <span class="metric">860</span>
+        <h2>Sample records</h2>
+        <p>A synthetic dataset is included so the schema and analytical workflows can be reproduced.</p>
+    </article>
+</section>
+{% endblock %}
+
