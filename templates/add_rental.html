@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}RentalDB | Add Rental{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <p class="eyebrow">Validated transaction</p>
+    <h1>Add a Rental Agreement</h1>
+    <p>Create an agreement for the current year while enforcing database and application rules.</p>
+</div>
+
+<section class="form-card">
+    {% if message %}<p class="alert success">{{ message }}</p>{% endif %}
+    {% if error %}<p class="alert error">{{ error }}</p>{% endif %}
+    {% if warning %}<p class="alert warning">{{ warning }}</p>{% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="field">
+            <label for="renterID">Renter ID</label>
+            <input type="number" id="renterID" name="renterID" min="1" required>
+        </div>
+
+        <div class="field">
+            <label for="cost">Monthly cost</label>
+            <input type="number" id="cost" name="cost" min="501" required>
+            <small>Minimum accepted value: 501</small>
+        </div>
+
+        <div class="field">
+            <label for="aID">Apartment</label>
+            <select id="aID" name="aID" required>
+                <option value="" disabled selected>Select an apartment</option>
+                {% for apartment_id in apartments %}
+                <option value="{{ apartment_id }}">Apartment {{ apartment_id }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button class="button primary" type="submit">Save agreement</button>
+    </form>
+</section>
+{% endblock %}
+

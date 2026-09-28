@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}RentalDB | Analytics{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <p class="eyebrow">Owner insights</p>
+    <h1>Search and Analytics</h1>
+    <p>Find owners by name or summarize an owner's apartment and rental activity.</p>
+</div>
+
+<div class="two-column">
+    <section class="form-card">
+        <h2>Find an owner</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="oName">Name begins with</label>
+                <input type="text" name="oName" id="oName" autocomplete="off" required>
+            </div>
+            <button class="button primary" type="submit">Search</button>
+        </form>
+
+        {% if search_warning %}<p class="alert error">{{ search_warning }}</p>{% endif %}
+        {% if search_results %}
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Owner ID</th><th>Name</th></tr></thead>
+                <tbody>
+                    {% for owner in search_results %}
+                    <tr><td>{{ owner.ownerID }}</td><td>{{ owner.oName }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="form-card">
+        <h2>Analyze an owner</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="ownerID">Owner ID</label>
+                <input type="number" min="1" name="ownerID" id="ownerID" required>
+            </div>
+            <button class="button primary" type="submit">Analyze</button>
+        </form>
+
+        {% if stats_warning %}<p class="alert error">{{ stats_warning }}</p>{% endif %}
+        {% if stats_result %}
+        <div class="stats">
+            <p class="stats-title">{{ stats_result.ownerName }} <span>#{{ stats_result.ownerID }}</span></p>
+            <dl>
+                <div><dt>Apartments</dt><dd>{{ stats_result.apartmentsCount }}</dd></div>
+                <div><dt>Average renters</dt><dd>{{ stats_result.avgRenters }}</dd></div>
+                <div><dt>Other owners in city</dt><dd>{{ stats_result.otherOwnersCount }}</dd></div>
+            </dl>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
+
